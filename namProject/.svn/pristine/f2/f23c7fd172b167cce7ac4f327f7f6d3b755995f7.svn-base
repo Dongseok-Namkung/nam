@@ -1,0 +1,23 @@
+function gfn_transaction(params){
+	$.ajax({
+		type: "POST",
+		url: "service.ax",
+		dataType: "json",
+		//contentType: 'Content-type: text/plain; charset=iso-8859-1',
+		data:"beanName=com.nkds.myapp.service.ServiceTest&methodName=processService&parameterTypeName=com.nkds.myapp.service.ServiceTestVO&id=nam&pw=asdf",
+		success: function(result){
+			//eval("callback('"+params.svcId + "'," +JSON.stringify(result)+");");
+			//unescape(encodeURIComponent(result));
+			var data = gfn_isEmpty(result) ? result : JSON.parse(JSON.stringify(result));
+			
+			fn_callback(params.svcId, data );
+		},
+		error:  function(e){
+			alert(e);
+		}
+	});
+}
+
+function gfn_isEmpty(str){
+	return str == null || str == undefined || str == "null" || str == "undefined" || str.length == 0 ? true : false;
+}

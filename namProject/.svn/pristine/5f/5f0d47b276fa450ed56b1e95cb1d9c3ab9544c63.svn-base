@@ -1,0 +1,91 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="resources/js/jquery/jquery-1.11.1.min.js"></script>
+<script src="resources/js/jquery/jquery-ui-1.11.1/jquery-ui.js"></script>
+<script src="resources/js/common.js"></script>
+
+<link rel="stylesheet"
+	href="resources/js/jquery/jquery-ui-1.11.1/jquery-ui.css" />
+<link rel="stylesheet"
+	href="resources/js/jquery/jquery-ui-1.11.1/jquery-ui.structure.css" />
+<link rel="stylesheet"
+	href="resources/js/jquery/jquery-ui-1.11.1/jquery-ui.theme.css" />
+
+<title>Insert title here</title>
+
+<script type="text/javascript">
+	$(function() {
+		//초기화
+		fn_init();
+	});
+	
+	/**********************************************************
+	초기화
+	**********************************************************/
+	function fn_init(){
+		fn_componentInit();
+		fn_setEventHandler();
+		
+		var str = new Array();
+		str[0] = "";
+		//alert(str);
+		//alert(gfn_isEmpty(str));
+		fn_transactionTest();
+	}
+	
+	/**********************************************************
+	1. 각종 컴포넌트 상태 포넌트 초기화
+	**********************************************************/
+	function fn_componentInit(){
+		
+	}
+	
+	/**********************************************************
+	1. 이벤트핸들러 등록
+	**********************************************************/
+	function fn_setEventHandler(){
+		
+	}
+	
+	/**********************************************************
+	Transaction 함수
+	**********************************************************/
+	function fn_transactionTest(){
+		var param = {
+				svcId : "asdf",
+				beanName : "com.nkds.myapp.service.ServiceTest",
+				parameterTypeName : "com.nkds.myapp.service.ServiceTestVO",
+				methodName : "processService",
+				parameters : "id=nam6068&pw=남궁동석"
+			};
+
+		gfn_transaction(param);
+	}
+	
+	/**********************************************************
+	Callback 함수
+	**********************************************************/
+	function fn_callback(svcId, result){
+		switch(svcId){
+		case "asdf":
+			//var list = result.list;
+			//alert(list);
+			alert(result.list.length);
+			alert(result.list[0].name);
+		break;
+		}
+	}
+</script>
+
+</head>
+
+<body>ASDASD
+
+
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+package com.nkds.myapp.service;
+
+public class ServiceTest {
+	public String processService(){
+		System.out.println("processService()");
+		
+		return null;
+	}
+}

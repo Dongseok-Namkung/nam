@@ -1,0 +1,14 @@
+package com.nkds.myapp.service;
+
+import org.springframework.stereotype.Service;
+
+@Service("com.nkds.myapp.service.ServiceTest")
+public class ServiceTest {
+	public String processService(ServiceTestVO vo){
+		System.out.println("processService()");
+		
+		System.out.println("vo.getId():"+vo.getId());
+		
+		return "processService() ³¡!";
+	}
+}
