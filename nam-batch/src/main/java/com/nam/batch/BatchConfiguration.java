@@ -80,6 +80,7 @@ public class BatchConfiguration {
 
     @Bean
     public JdbcBatchItemWriter<User> writer() {
+    	
         JdbcBatchItemWriter<User> writer = new JdbcBatchItemWriter<User>();
         writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<User>());
         writer.setSql("INSERT INTO sam_stf_result (stfno, nm, orgcd) VALUES (:stfno, :nm, '2222222')");
