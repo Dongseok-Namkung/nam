@@ -1,0 +1,18 @@
+package com.nkds.myapp.service;
+
+import org.springframework.stereotype.Service;
+
+@Service("com.nkds.myapp.service.ServiceTestVO")
+public class ServiceTestVO {
+	String testStr = "";
+
+	public String getTestStr() {
+		return testStr;
+	}
+
+	public void setTestStr(String testStr) {
+		this.testStr = testStr;
+	}
+	
+	
+}

@@ -1,0 +1,76 @@
+package com.nkds.myapp.controller;
+
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.nkds.myapp.service.ServiceTest;
+
+/**
+ * Handles requests for the application home page.
+ */
+@Controller
+public class NamController extends HttpServlet {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(NamController.class);
+
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "*.do", method = RequestMethod.GET)
+	public ModelAndView processGet(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return doProcess(request, response);
+	}
+
+	@RequestMapping(value = "*.do", method = RequestMethod.POST)
+	public ModelAndView processPost(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return doProcess(request, response);
+	}
+
+	private ModelAndView doProcess(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		String viewName = request.getServletPath().replace("/", "")
+				.replace(".do", "");
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		Enumeration param = request.getParameterNames(); // 파라미터 값을 한꺼번에 받아온다.
+		
+		while (param.hasMoreElements()) { // 폼에서 넘어온 파라이터값이 더 있는동안
+			String name = (String) param.nextElement(); // 파라미터 값을 차례대로 가져와 name
+			map.put(name, request.getParameter(name));											// 변수에 저장한다.
+			System.out.println(name + ":" + request.getParameter(name));
+		}
+		
+		processServiceLogic(map.get("serviceName").toString());
+		
+		System.out.println(viewName);
+		mav.setViewName(viewName);
+
+		return mav;
+	}
+
+	private Object processServiceLogic(String serviceName) throws Exception {
+		Class<?> obj = Class.forName("com.nkds.myapp.service."+serviceName);
+		System.out.println("OBJ: "+obj.toString());
+		return null;
+	}
+
+}
