@@ -2,6 +2,7 @@ package com.nam.batch;
 
 import javax.sql.DataSource;
 
+import org.mybatis.spring.batch.MyBatisPagingItemReader;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
@@ -39,24 +40,9 @@ public class BatchConfiguration {
     public DataSource dataSource;
 
     // tag::readerwriterprocessor[]
-    @Bean
-    public FlatFileItemReader<User> reader() {
-    	
-        FlatFileItemReader<User> reader = new FlatFileItemReader<User>();
-        reader.setResource(new ClassPathResource("sample-data.csv"));
-        reader.setLineMapper(new DefaultLineMapper<User>() {{
-            setLineTokenizer(new DelimitedLineTokenizer() {{
-                setNames(new String[] { "firstName", "lastName" });
-            }});
-            setFieldSetMapper(new BeanWrapperFieldSetMapper<User>() {{
-                setTargetType(User.class);
-            }});
-        }});
-        return reader;
-    }
     
     @Bean
-    ItemReader<User> databaseXmlItemReader() {
+    ItemReader<User> databaseItemReader() {
         JdbcCursorItemReader<User> databaseReader = new JdbcCursorItemReader<>();
          String QUERY_FIND_STUDENTS =
                 "SELECT " +
@@ -95,16 +81,16 @@ public class BatchConfiguration {
         return jobBuilderFactory.get("importUserJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
-                .flow(step1())
+                .flow(SynchronizeUserStep())
                 .end()
                 .build();
     }
 
     @Bean
-    public Step step1() {
+    public Step SynchronizeUserStep() {
         return stepBuilderFactory.get("step1")
                 .<User, User> chunk(10)
-                .reader(databaseXmlItemReader())
+                .reader(databaseItemReader())
                 .processor(processor())
                 .writer(writer())
                 .build();
